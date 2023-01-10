@@ -15,7 +15,7 @@ namespace Domain
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
 
-            optionsBuilder.UseSqlite("Data source=databaseLite.db");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=testdb;User Id=app;Password=Secret123;Encrypt=false;TrustServerCertificate=true");
 
             return new ApplicationContext(optionsBuilder.Options);
         }

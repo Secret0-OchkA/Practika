@@ -10,9 +10,9 @@ using System.Xml.Serialization;
 
 namespace Infrastructura
 {
-    internal class ApplicationContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        public DbSet<Blood> bloods { get; protected set; } = null!;
+        public DbSet<Blood> Bloods { get; protected set; } = null!;
         public DbSet<Patient> Patients { get; protected set; } = null!;
         public DbSet<Service> Services { get; protected set; } = null!;
         public DbSet<BloodService> bloodServices { get; protected set; } = null!;
@@ -22,7 +22,7 @@ namespace Infrastructura
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data source=databaseLite.db");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=testdb;User Id=app;Password=Secret123;Encrypt=false;TrustServerCertificate=true");
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

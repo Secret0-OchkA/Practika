@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructura", "Infrastructura\Infrastructura.csproj", "{BCBA9C2B-79D5-4EBD-999F-5C7C58C85A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructura", "Infrastructura\Infrastructura.csproj", "{BCBA9C2B-79D5-4EBD-999F-5C7C58C85A73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{0368B56B-70C4-4AD8-AE5E-B1FED299E207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{0368B56B-70C4-4AD8-AE5E-B1FED299E207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesctopeApp", "DesctopeApp\DesctopeApp.csproj", "{D99406CE-EC23-47A4-BE1A-44DD49A2682E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesctopeApp", "DesctopeApp\DesctopeApp.csproj", "{D99406CE-EC23-47A4-BE1A-44DD49A2682E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5F596A73-0692-4DE0-A118-46E3B368457B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D99406CE-EC23-47A4-BE1A-44DD49A2682E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99406CE-EC23-47A4-BE1A-44DD49A2682E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99406CE-EC23-47A4-BE1A-44DD49A2682E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F596A73-0692-4DE0-A118-46E3B368457B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F596A73-0692-4DE0-A118-46E3B368457B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F596A73-0692-4DE0-A118-46E3B368457B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F596A73-0692-4DE0-A118-46E3B368457B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
