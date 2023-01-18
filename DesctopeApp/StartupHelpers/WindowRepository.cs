@@ -1,4 +1,5 @@
-﻿using DesctopeApp.RoleWindows;
+﻿using DesctopeApp.Dialogs;
+using DesctopeApp.RoleWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace DesctopeApp.StartupHelpers
             IAbstractWindowFactory<AdminWindow> adminFactory,
             IAbstractWindowFactory<AssistantWIndow> assistantFactory,
             IAbstractWindowFactory<AccountantWindow> accountantWindow,
+            IAbstractWindowFactory<AddBiomaterialDialog> biomaterialDialog,
             IAbstractWindowFactory<PatientWindow> patientFActory
             )
         {
@@ -27,6 +29,7 @@ namespace DesctopeApp.StartupHelpers
             AdminFactory = adminFactory;
             AssistantFactory = assistantFactory;
             AccountantWindow = accountantWindow;
+            BiomaterialDialog = biomaterialDialog;
             PatientFActory = patientFActory;
         }
 
@@ -37,6 +40,7 @@ namespace DesctopeApp.StartupHelpers
         public IAbstractWindowFactory<AdminWindow> AdminFactory { get; }
         public IAbstractWindowFactory<AssistantWIndow> AssistantFactory { get; }
         public IAbstractWindowFactory<AccountantWindow> AccountantWindow { get; }
+        public IAbstractWindowFactory<AddBiomaterialDialog> BiomaterialDialog { get; }
         public IAbstractWindowFactory<PatientWindow> PatientFActory { get; }
     }
 }

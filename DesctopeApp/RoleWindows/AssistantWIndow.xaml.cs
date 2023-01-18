@@ -112,5 +112,11 @@ namespace DesctopeApp.RoleWindows
             if(sender is TextBox textBox) 
             barcodeLabel.Content = barcodeGenerator.GenerateCode(textBox.Text);
         }
+
+        private void Button_Click_AddBiomaterial(object sender, RoutedEventArgs e)
+        {
+            if (windowRepository.BiomaterialDialog.Create().ShowDialog() == true)
+                MessageBox.Show("dialog Ok");
+        }
     }
 }

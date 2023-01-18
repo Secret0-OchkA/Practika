@@ -20,6 +20,8 @@ namespace Infrastructura
         public DbSet<User> Users { get; protected set; } = null!;
         public DbSet<Report> Reports { get; protected set; } = null!;
         public DbSet<HistoryRow> History { get; protected set; } = null!;
+        public DbSet<Order> Orders { get; protected set; } = null!;
+        public DbSet<ServiceInOrder> ServiceInOrder { get; protected set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 

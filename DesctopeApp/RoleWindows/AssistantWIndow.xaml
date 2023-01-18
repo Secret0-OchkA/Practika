@@ -34,9 +34,31 @@
             </StackPanel>
             <Button Content="Create report" Click="Button_CreateReport" Grid.Row="2"/>
         </Grid>
-        <StackPanel Grid.Column="2">
-            <Label x:Name="barcodeLabel" FontFamily="{StaticResource BarcodeFont}" FontSize="180"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+            <Label x:Name="barcodeLabel" FontFamily="{StaticResource BarcodeFont}" FontSize="180" Grid.Row="1"/>
             <TextBox TextChanged="TextBox_TextChanged"/>
-        </StackPanel>
+            </StackPanel>
+                
+            <Grid Grid.Row="2" Margin="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Padding="10">
+                    <Button Content="Add biomaterial" Click="Button_Click_AddBiomaterial"/>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

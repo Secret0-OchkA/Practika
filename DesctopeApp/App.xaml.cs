@@ -1,4 +1,5 @@
-﻿using DesctopeApp.RoleWindows;
+﻿using DesctopeApp.Dialogs;
+using DesctopeApp.RoleWindows;
 using DesctopeApp.StartupHelpers;
 using Domain;
 using Infrastructura;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Auth;
 using Services.BizServices;
+using Services.Domain;
 using Services.internetServices;
 using Services.RoleServices;
 using System;
@@ -35,6 +37,8 @@ namespace DesctopeApp
                     services.AddTransient<IGetIpService, GetIpService>();
                     services.AddTransient<IHasherService, HasherService>();
                     services.AddTransient<IBarcodeGenerator, BarcodeGenerator>();
+                    services.AddTransient<IBloodService, Services.Domain.BloodService>();
+                    services.AddTransient<IPatientManager, PatientManager>();
 
                     services.AddTransient<IReportService, ReportService>();
                     services.AddTransient<ILogingHistoryService, LogingHistoryService>();
@@ -43,6 +47,7 @@ namespace DesctopeApp
 
                     services.AddWindowFactory<LoginWindow>();
                     services.AddWindowFactory<RegistreWorkerWindow>();
+                    services.AddWindowFactory<AddBiomaterialDialog>();
                     services.AddWindowFactory<RegistrePatientWindow>();
                     services.AddWindowFactory<ChoseRegWindow>();
                     services.AddWindowFactory<AdminWindow>();
