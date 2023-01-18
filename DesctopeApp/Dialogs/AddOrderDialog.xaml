@@ -21,20 +21,25 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="2" Grid.RowSpan="2">
             <Label Content="Patient"/>
-            <ComboBox x:Name="ComboBox_Patient"/>
+            <ComboBox x:Name="ComboBox_Patient" DisplayMemberPath="person.Name" SelectedValuePath="Id" SelectionChanged="ComboBox_Patient_SelectionChanged"/>
             <Label Content="blood"/>
-            <ComboBox x:Name="ComboBox_Blood"/>
+            <ComboBox x:Name="ComboBox_Blood" DisplayMemberPath="barcode" SelectedValuePath="Id"/>
             <Label Content="service"/>
-            <ComboBox x:Name="ComboBox_Services"/>
+            <ComboBox x:Name="ComboBox_Services" DisplayMemberPath="Name" SelectedValuePath="Code"/>
             <Border Margin="5,10,5,0">
                 <Button Content="Add service" Click="Button_Click_AddService"/>
             </Border>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Cost:"/>
+                <Label x:Name="Label_Cost" Content="123"/>
+            </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2">
             <Button Content="Remove service" Click="Button_Click_RemoveService"/>
         </StackPanel>
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.RowSpan="2">
-            
+        <ListBox x:Name="ListBox_Order" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.RowSpan="2" DisplayMemberPath="Key" SelectedValuePath="Value">
+
         </ListBox>
     </Grid>
 </Window>

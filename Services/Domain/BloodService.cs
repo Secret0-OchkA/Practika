@@ -13,6 +13,7 @@ namespace Services.Domain
     {
         Task AddBloodAsync(string patientName, int code, DateTime date);
         Task<List<Blood>> GetBloodByPatient(int patientId);
+        Task<Blood?> GetById(int bloodId);
     }
 
     public class BloodService : IBloodService
@@ -41,5 +42,8 @@ namespace Services.Domain
         {
             return await context.Bloods.Where(b => b.Patient.Id == patientId).ToListAsync();
         }
+
+        public async Task<Blood?> GetById(int bloodId)
+            => await context.Bloods.SingleOrDefaultAsync(b => b.Id == bloodId);
     }
 }
