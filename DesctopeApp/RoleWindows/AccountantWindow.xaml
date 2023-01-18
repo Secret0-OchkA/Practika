@@ -1,0 +1,46 @@
+﻿<Window x:Class="DesctopeApp.RoleWindows.AccountantWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesctopeApp.RoleWindows"
+        mc:Ignorable="d"
+        Title="AccountantWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="ReportTextBox" MaxLines="100" TextWrapping="WrapWithOverflow" Text="Приехала наша бабушка из деревни в Америку. По-английски ни слова. И вот захотелось ей манной каши. Заходит она в местный магазин, а там продавец — негр. Подходит она к нему и говорит: Дай манки."/>
+            <StackPanel Grid.Row="1">
+                <Label Content="Report name"/>
+                <TextBox x:Name="ReportNameTextBox" />
+            </StackPanel>
+            <Button Content="Create report" Click="Button_CreateReport" Grid.Row="2"/>
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="LoadReportTextBlock" TextWrapping="WrapWithOverflow"/>
+            <ListBox x:Name="ReportsListBox" Grid.Row="1" SelectionChanged="ReportsListBox_SelectionChanged" Grid.RowSpan="2">
+            
+            </ListBox>
+        </Grid>
+
+        <DockPanel>
+            <Button Content="logout" Click="Click_logout" Height="20" VerticalAlignment="Bottom"/>
+        </DockPanel>
+    </Grid>
+</Window>

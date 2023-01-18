@@ -1,10 +1,11 @@
-﻿<Window x:Class="DesctopeApp.RegistreWindow"
+﻿<Window x:Class="DesctopeApp.RegistreWorkerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesctopeApp"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"  
         Title="RegistreWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,8 +24,11 @@
             <TextBox x:Name="LoginTextBox" Text="secretochka@gmail.com"/>
             
             <Label Content="Name"/>
-            <TextBlock x:Name="NameTextBox" Text="secretochka"/>
-            
+            <TextBox x:Name="NameTextBox" Text="secretochka"/>
+
+            <Label Content="Role"/>
+            <ComboBox x:Name="ComboBoxRole"/>
+
             <Label Content="Password" />
             <TextBox x:Name="PasswordTextBox" Text="password"/>
             

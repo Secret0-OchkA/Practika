@@ -1,9 +1,13 @@
-﻿using Domain;
+﻿using DesctopeApp.RoleWindows;
+using DesctopeApp.StartupHelpers;
+using Domain;
 using Infrastructura;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Auth;
+using Services.BizServices;
 using Services.internetServices;
+using Services.RoleServices;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,6 +24,7 @@ namespace DesctopeApp
     public partial class App : Application
     {
         public static IHost? AppHost { get; private set; }
+        public static CurUserInfo curuser { get; private set; } = new CurUserInfo();
 
         public App()
         {
@@ -28,10 +33,25 @@ namespace DesctopeApp
                 {
                     services.AddTransient<IServiceAuth, ServiceAuth>();
                     services.AddTransient<IGetIpService, GetIpService>();
+                    services.AddTransient<IHasherService, HasherService>();
+
+                    services.AddTransient<IReportService, ReportService>();
+                    services.AddTransient<ILogingHistoryService, LogingHistoryService>();
+
                     services.AddDbContext<ApplicationContext>();
 
-                    services.AddSingleton<LoginWindow>();
-                    services.AddSingleton<RegistreWindow>();
+                    services.AddWindowFactory<LoginWindow>();
+                    services.AddWindowFactory<RegistreWorkerWindow>();
+                    services.AddWindowFactory<RegistrePatientWindow>();
+                    services.AddWindowFactory<ChoseRegWindow>();
+                    services.AddWindowFactory<AdminWindow>();
+                    services.AddWindowFactory<AccountantWindow>();
+                    services.AddWindowFactory<AssistantWIndow>();
+                    services.AddWindowFactory<PatientWindow>();
+
+                    services.AddTransient<WindowRepository>();
+
+                    services.AddSingleton(curuser);
                 })
                 .Build();
         }
@@ -40,7 +60,7 @@ namespace DesctopeApp
         {
             await AppHost!.StartAsync();
 
-            var startupForm = AppHost.Services.GetRequiredService<RegistreWindow>();
+            var startupForm = AppHost.Services.GetRequiredService<IAbstractWindowFactory<LoginWindow>>().Create();
             startupForm.Show();
 
             base.OnStartup(e);

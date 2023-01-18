@@ -5,9 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Domain
 {
@@ -52,22 +54,27 @@ namespace Domain
     public class Identity : IValidatableObject
     {
         protected Identity() { }
-        public Identity(string name, string login, string password, string ip)
+        public Identity(string name, string login, string password, string ip, Roles role)
         {
             Name = name;
             this.login = login;
             this.password = password;
             Ip = ip;
+            this.role = role;
         }
 
         [Required, DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Name { get; set; }
-        [Required,EmailAddress]
+        [Required, EmailAddress]
         public string login { get; set; }
         [Required, DisplayFormat(ConvertEmptyStringToNull = true)]
         public string password { get; set; }
         [Required, DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Ip { get; set; }
+        [Required]
+        public Roles role { get; set; }
+        [Required]
+        public DateTime lastenter { get; set; } = DateTime.Now;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -77,11 +84,11 @@ namespace Domain
             Validator.ValidateProperty(login, new ValidationContext(this) { MemberName = nameof(login) });
             Validator.ValidateProperty(password, new ValidationContext(this) { MemberName = nameof(password) });
             Validator.ValidateProperty(Ip, new ValidationContext(this) { MemberName = nameof(Ip) });
+            Validator.ValidateProperty(role, new ValidationContext(this) { MemberName = nameof(role) });
 
             return results;
         }
     }
-
 
     public class Blood : IValidatableObject
     {
@@ -124,9 +131,9 @@ namespace Domain
             Number = number;
         }
 
-        [RegularExpression("^([0-9]{2}\\s{1}[0-9]{2})?$")]
+        [RegularExpression(@"^[0-9]{2}\s[0-9]{2}$")]
         public string Serial { get; set; }
-        [RegularExpression("^([0-9]{6})?$")]
+        [RegularExpression("^[0-9]{6}$")]
         public string Number { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -140,7 +147,7 @@ namespace Domain
         }
     }
     [Owned]
-    public class Person
+    public class Person : IValidatableObject
     {
         protected Person() { }
         public Person(string name, DateTime birthdate)
@@ -149,8 +156,22 @@ namespace Domain
             Birthdate = birthdate;
         }
 
+        [Required, DisplayFormat(ConvertEmptyStringToNull = true)]
         public string Name { get; set; }
+        [Required]
         public DateTime Birthdate { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            Validator.ValidateProperty(Name, new ValidationContext(this) { DisplayName = nameof(Name) });
+            Validator.ValidateProperty(Birthdate, new ValidationContext(this) { DisplayName = nameof(Birthdate) });
+
+            if ((DateTime.Now - Birthdate).TotalDays / 356 <= 100) throw new ValidationException("age more than 100 years");
+
+            return errors;
+        }
     }
 
     public class Patient : IValidatableObject 
@@ -173,7 +194,7 @@ namespace Domain
         [Required]
         public int Id { get; set; }
         [Required]
-        public Guid guid { get; set; }
+        public Guid guid { get; set; } = Guid.NewGuid();
         [Required]
         public Identity user { get; set; }
         [Required]
@@ -212,7 +233,7 @@ namespace Domain
         }
     }
 
-    public class Service
+    public class Service : IValidatableObject
     {
         protected Service() { }
         public Service(int code, string name, decimal price)
@@ -228,9 +249,22 @@ namespace Domain
         public string Name { get; set; }
         [Required]
         public decimal Price { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            Validator.ValidateProperty(Code, new ValidationContext(this) { DisplayName = nameof(Code) });
+            Validator.ValidateProperty(Name, new ValidationContext(this) { DisplayName = nameof(Name) });
+            Validator.ValidateProperty(Price, new ValidationContext(this) { DisplayName = nameof(Price) });
+
+            if (Price <= 0) throw new ValidationException("Price less 0");
+
+            return errors; 
+        }
     }
 
-    public class BloodService
+    public class BloodService : IValidatableObject
     {
         protected BloodService() { }
         public BloodService(Blood blood, Service service, double result, double finished, bool accepted, CompliteStatus status, analyzerType analyzer, User user)
@@ -261,17 +295,34 @@ namespace Domain
         public analyzerType analyzer { get; set; }
         [Required]
         public User user { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            Validator.ValidateProperty(Blood, new ValidationContext(this) { DisplayName = nameof(Blood) });
+            Validator.ValidateProperty(service, new ValidationContext(this) { DisplayName = nameof(service) });
+            Validator.ValidateProperty(result, new ValidationContext(this) { DisplayName = nameof(result) });
+            Validator.ValidateProperty(finished, new ValidationContext(this) { DisplayName = nameof(finished) });
+            Validator.ValidateProperty(accepted, new ValidationContext(this) { DisplayName = nameof(accepted) });
+            Validator.ValidateProperty(status, new ValidationContext(this) { DisplayName = nameof(status) });
+            Validator.ValidateProperty(analyzer, new ValidationContext(this) { DisplayName = nameof(analyzer) });
+            Validator.ValidateProperty(user, new ValidationContext(this) { DisplayName = nameof(user) });
+
+            if (analyzer == analyzerType.Unknown) throw new ValidationException("Unknow type analyzer");
+            if (status == CompliteStatus.Unknown) throw new ValidationException("Unknow complite status");
+
+            return errors;
+        }
     }
 
-    public class User
+    public class User : IValidatableObject
     {
         protected User() { }
-        public User(Identity identity, List<int> services, Roles type, DateTime lastenter)
+        public User(Identity identity, List<int> services)
         {
             this.identity = identity;
             this.services = services;
-            this.type = type;
-            this.lastenter = lastenter;
         }
 
         public int Id { get; set; }
@@ -280,9 +331,17 @@ namespace Domain
         [Required]
         public List<int> services { get; set; }
         [Required]
-        public Roles type { get; set; }
-        [Required]
         public DateTime lastenter { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            Validator.ValidateProperty(identity, new ValidationContext(this) { DisplayName = nameof(identity) });
+            Validator.ValidateProperty(services, new ValidationContext(this) { DisplayName = nameof(services) });
+
+            return errors;
+        }
     }
 
     public enum Roles
@@ -304,5 +363,48 @@ namespace Domain
         Unknown,
         Biorad,
         Ledetect
+    }
+
+    public class Report : IValidatableObject
+    {
+        protected Report() { }
+        public Report(string name, string data)
+        {
+            this.name = name;
+            this.data = data;
+        }
+       
+        public int id { get; set; }
+        [Required]
+        public string name { get; set; }
+        [Column(TypeName = "nvarchar(max)"), Required]
+        public string data { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            Validator.ValidateProperty(name, new ValidationContext(this) { DisplayName = nameof(name)});
+            Validator.ValidateProperty(data,new ValidationContext(this) { DisplayName = nameof(data)});
+
+            return errors;
+        }
+    }
+
+    public class HistoryRow
+    {
+        protected HistoryRow() { }
+        public HistoryRow(string login, bool confirm, DateTime? enterTime, DateTime? exitTime)
+        {
+            this.login = login;
+            this.confirmEnter = confirm;
+            this.EnterTime = enterTime;
+            this.exitTime = exitTime;
+        }
+        public int id { get; set; }
+        public string login { get; set; }
+        public DateTime? EnterTime { get; set; }
+        public DateTime? exitTime { get; set; }
+        public bool confirmEnter { get; set; }
     }
 }

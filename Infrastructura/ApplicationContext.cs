@@ -3,6 +3,7 @@ using Infrastructura.Maps;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace Infrastructura
         public DbSet<Service> Services { get; protected set; } = null!;
         public DbSet<BloodService> bloodServices { get; protected set; } = null!;
         public DbSet<User> Users { get; protected set; } = null!;
+        public DbSet<Report> Reports { get; protected set; } = null!;
+        public DbSet<HistoryRow> History { get; protected set; } = null!;
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
