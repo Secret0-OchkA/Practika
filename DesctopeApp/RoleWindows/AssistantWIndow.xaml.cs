@@ -115,8 +115,12 @@ namespace DesctopeApp.RoleWindows
 
         private void Button_Click_AddBiomaterial(object sender, RoutedEventArgs e)
         {
-            if (windowRepository.BiomaterialDialog.Create().ShowDialog() == true)
-                MessageBox.Show("dialog Ok");
+            windowRepository.BiomaterialDialog.Create().ShowDialog();
+        }
+
+        private void Button_Click_AddOrder(object sender, RoutedEventArgs e)
+        {
+            windowRepository.AddOrderDialog.Create().ShowDialog();
         }
     }
 }

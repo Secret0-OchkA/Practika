@@ -58,6 +58,9 @@
                 <Border Padding="10">
                     <Button Content="Add biomaterial" Click="Button_Click_AddBiomaterial"/>
                 </Border>
+                <Border Grid.Column="1" Padding="10">
+                    <Button Content="Add order" Click="Button_Click_AddOrder"/>
+                </Border>
             </Grid>
         </Grid>
     </Grid>

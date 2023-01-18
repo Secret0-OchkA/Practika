@@ -11,6 +11,7 @@ namespace Services.Domain
 {
     public interface IPatientManager
     {
+        Task<List<Patient>> GetAll();
         Task<Patient?> GetByName(string name);
     }
 
@@ -26,6 +27,10 @@ namespace Services.Domain
         public async Task<Patient?> GetByName(string name)
         {
             return await context.Patients.SingleOrDefaultAsync(p => p.person.Name.Equals(name));
+        }
+        public async Task<List<Patient>> GetAll()
+        {
+            return await context.Patients.ToListAsync();
         }
     }
 }

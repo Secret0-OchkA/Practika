@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DesctopeApp.Dialogs"
         mc:Ignorable="d"
         Title="AddBiomaterialDialog" Height="212" Width="210">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

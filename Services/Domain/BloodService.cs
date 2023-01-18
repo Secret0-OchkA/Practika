@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Infrastructura;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Services.Domain
     public interface IBloodService
     {
         Task AddBloodAsync(string patientName, int code, DateTime date);
+        Task<List<Blood>> GetBloodByPatient(int patientId);
     }
 
     public class BloodService : IBloodService
@@ -33,6 +35,11 @@ namespace Services.Domain
             Blood blood = new Blood(patient, code, date);
             context.Bloods.Add(blood);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<Blood>> GetBloodByPatient(int patientId)
+        {
+            return await context.Bloods.Where(b => b.Patient.Id == patientId).ToListAsync();
         }
     }
 }

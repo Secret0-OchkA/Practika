@@ -39,6 +39,7 @@ namespace DesctopeApp
                     services.AddTransient<IBarcodeGenerator, BarcodeGenerator>();
                     services.AddTransient<IBloodService, Services.Domain.BloodService>();
                     services.AddTransient<IPatientManager, PatientManager>();
+                    services.AddTransient<IServiceManager, ServiceManager>();
 
                     services.AddTransient<IReportService, ReportService>();
                     services.AddTransient<ILogingHistoryService, LogingHistoryService>();
@@ -50,6 +51,7 @@ namespace DesctopeApp
                     services.AddWindowFactory<AddBiomaterialDialog>();
                     services.AddWindowFactory<RegistrePatientWindow>();
                     services.AddWindowFactory<ChoseRegWindow>();
+                    services.AddWindowFactory<AddOrderDialog>();
                     services.AddWindowFactory<AdminWindow>();
                     services.AddWindowFactory<AccountantWindow>();
                     services.AddWindowFactory<AssistantWIndow>();
