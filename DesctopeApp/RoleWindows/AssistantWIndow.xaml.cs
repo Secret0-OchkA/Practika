@@ -1,6 +1,7 @@
 ﻿using DesctopeApp.StartupHelpers;
 using Microsoft.Win32;
 using Services.Auth;
+using Services.BizServices;
 using Services.RoleServices;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace DesctopeApp.RoleWindows
         private readonly IReportService reportService;
         private readonly WindowRepository windowRepository;
         private readonly ILogingHistoryService logingHistoryService;
+        private readonly IBarcodeGenerator barcodeGenerator;
         private readonly TimeSpan logoutDelay = new TimeSpan(0,10,0);
         private readonly DispatcherTimer logoutTimer = new DispatcherTimer();
 
@@ -38,12 +40,13 @@ namespace DesctopeApp.RoleWindows
         private readonly DispatcherTimer Timer = new DispatcherTimer();
 
 
-        public AssistantWIndow(IReportService reportService, WindowRepository windowRepository, ILogingHistoryService logingHistoryService)
+        public AssistantWIndow(IReportService reportService, WindowRepository windowRepository, ILogingHistoryService logingHistoryService, IBarcodeGenerator barcodeGenerator)
         {
             InitializeComponent();
             this.reportService = reportService;
             this.windowRepository = windowRepository;
             this.logingHistoryService = logingHistoryService;
+            this.barcodeGenerator = barcodeGenerator;
         }
 
 
@@ -102,6 +105,12 @@ namespace DesctopeApp.RoleWindows
         {
             TimeSpanTimer = TimeSpanTimer - TimeSpan.FromSeconds(1);
             TimerTextBlock.Text = TimeSpanTimer.ToString();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(sender is TextBox textBox) 
+            barcodeLabel.Content = barcodeGenerator.GenerateCode(textBox.Text);
         }
     }
 }

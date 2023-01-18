@@ -34,6 +34,7 @@ namespace DesctopeApp
                     services.AddTransient<IServiceAuth, ServiceAuth>();
                     services.AddTransient<IGetIpService, GetIpService>();
                     services.AddTransient<IHasherService, HasherService>();
+                    services.AddTransient<IBarcodeGenerator, BarcodeGenerator>();
 
                     services.AddTransient<IReportService, ReportService>();
                     services.AddTransient<ILogingHistoryService, LogingHistoryService>();
